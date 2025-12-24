@@ -5,89 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Проверка акции</title>
   <style>
-    body {
-      margin: 0;
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background:#0f172a;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
     }
-    .box {
-      text-align: center;
-      background: #111827;
-      padding: 30px;
-      border-radius: 16px;
-      max-width: 420px;
-      width: 92%;
+    .box{
+      text-align:center;
+      background:#111827;
+      padding:30px;
+      border-radius:16px;
+      max-width:420px;
+      width:90%;
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-    h1 {
-      font-size: 22px;
-      margin: 0 0 14px;
+    h1{ font-size:22px; margin:0 0 14px; }
+    p{ font-size:16px; opacity:.9; margin:10px 0; }
+    .btn{
+      display:block;
+      width:100%;
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius:12px;
+      border:none;
+      font-weight:700;
+      cursor:pointer;
+      font-size:15px;
     }
-    p {
-      font-size: 16px;
-      opacity: 0.92;
-      margin: 10px 0;
-      line-height: 1.35;
+    .btn-primary{ background:#22c55e; color:#0b1220; }
+    .btn-secondary{ background:#e2e8f0; color:#0b1220; }
+    .btn:disabled{ opacity:.6; cursor:not-allowed; }
+    .status{
+      margin-top:14px;
+      font-size:14px;
+      opacity:.9;
+      min-height:18px;
     }
-
-    .btn {
-      display: inline-block;
-      margin-top: 18px;
-      padding: 16px 18px;
-      background: #22c55e;
-      color: #0b1220;
-      text-decoration: none;
-      font-weight: 800;
-      border-radius: 12px;
-      width: 100%;
-      box-sizing: border-box;
-      cursor: pointer;
-      user-select: none;
-      border: none;
-      font-size: 15px;
-    }
-    .btn:disabled {
-      opacity: .7;
-      cursor: not-allowed;
-    }
-
-    .status {
-      margin-top: 14px;
-      font-size: 14px;
-      opacity: .85;
-      min-height: 20px;
-    }
-
-    .loader {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(255,255,255,.35);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      vertical-align: -2px;
-      margin-right: 8px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .hidden { display: none; }
-
-    .fallback {
-      margin-top: 12px;
-      font-size: 13px;
-      opacity: .85;
-    }
-    .fallback a {
-      color: #7dd3fc;
-      text-decoration: underline;
-      word-break: break-all;
-    }
+    .hidden{ display:none; }
   </style>
 </head>
 <body>
@@ -96,44 +55,31 @@
     <p>Некоторым пользователям доступно участие.</p>
     <p>Нажмите кнопку ниже, чтобы проверить доступность.</p>
 
-    <!-- Шаг 1 -->
-    <button id="checkBtn" class="btn">ПРОВЕРИТЬ УЧАСТИЕ</button>
+    <button id="checkBtn" class="btn btn-primary">ПРОВЕРИТЬ УЧАСТИЕ</button>
 
-    <!-- Статус -->
     <div id="status" class="status"></div>
 
-    <!-- Шаг 2 -->
-    <a id="tgBtn" class="btn hidden" href="https://t.me/newyear_check" target="_blank" rel="noopener">
-      ПЕРЕЙТИ В TELEGRAM
+    <a id="goBtn" class="btn btn-secondary hidden" href="https://t.me/newyear_check" target="_blank" rel="noopener">
+      ПЕРЕЙТИ И ЗАБРАТЬ БОНУС
     </a>
-
-    <!-- Запасной вариант -->
-    <div id="fallback" class="fallback hidden">
-      Если Telegram не открылся, нажмите сюда:
-      <a href="https://t.me/newyear_check" target="_blank" rel="noopener">https://t.me/newyear_check</a>
-    </div>
   </div>
 
   <script>
     const checkBtn = document.getElementById('checkBtn');
-    const tgBtn = document.getElementById('tgBtn');
+    const goBtn = document.getElementById('goBtn');
     const statusEl = document.getElementById('status');
-    const fallbackEl = document.getElementById('fallback');
-
-    function randomDelay() {
-      // 1500–2500мс, чтобы не было одинакового тайминга
-      return 1500 + Math.floor(Math.random() * 1000);
-    }
 
     checkBtn.addEventListener('click', () => {
       checkBtn.disabled = true;
-      statusEl.innerHTML = '<span class="loader"></span>Проверяем доступ...';
+      statusEl.textContent = 'Проверяем доступ…';
+
+      // микро-задержка 2–4 секунды
+      const delay = 2000 + Math.floor(Math.random() * 2000);
 
       setTimeout(() => {
         statusEl.textContent = 'Доступ подтверждён ✅';
-        tgBtn.classList.remove('hidden');
-        fallbackEl.classList.remove('hidden');
-      }, randomDelay());
+        goBtn.classList.remove('hidden');
+      }, delay);
     });
   </script>
 </body>
