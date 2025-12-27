@@ -1,86 +1,99 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Проверка акции</title>
+  <meta charset="UTF-8">
+  <title>Новогодняя акция</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body{
-      margin:0;
+    body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background:#0f172a;
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      height:100vh;
+      background: #0b0f1a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    .box{
-      text-align:center;
-      background:#111827;
-      padding:30px;
-      border-radius:16px;
-      max-width:420px;
-      width:90%;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    .box {
+      background: #12172b;
+      padding: 30px 20px;
+      border-radius: 14px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
     }
-    h1{ font-size:22px; margin:0 0 14px; }
-    p{ font-size:16px; opacity:.9; margin:10px 0; }
-    .btn{
-      display:block;
-      width:100%;
-      margin-top:18px;
-      padding:14px 16px;
-      border-radius:12px;
-      border:none;
-      font-weight:700;
-      cursor:pointer;
-      font-size:15px;
+    h1 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #ffd700;
     }
-    .btn-primary{ background:#22c55e; color:#0b1220; }
-    .btn-secondary{ background:#e2e8f0; color:#0b1220; }
-    .btn:disabled{ opacity:.6; cursor:not-allowed; }
-    .status{
-      margin-top:14px;
-      font-size:14px;
-      opacity:.9;
-      min-height:18px;
+    p {
+      font-size: 16px;
+      line-height: 1.4;
+      margin-bottom: 20px;
     }
-    .hidden{ display:none; }
+    .amount {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 15px 0;
+      color: #00ff9c;
+    }
+    button {
+      background: linear-gradient(135deg, #ffcc00, #ff9900);
+      border: none;
+      border-radius: 30px;
+      padding: 15px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:disabled {
+      background: #777;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 15px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>🎄 Новогодняя акция</h1>
-    <p>Некоторым пользователям доступно участие.</p>
-    <p>Нажмите кнопку ниже, чтобы проверить доступность.</p>
 
-    <button id="checkBtn" class="btn btn-primary">ПРОВЕРИТЬ УЧАСТИЕ</button>
+<div class="box">
+  <h1>Новогодняя акция для русскоязычных в Польше</h1>
 
-    <div id="status" class="status"></div>
+  <p>
+    В честь Нового года проводится бонусная акция среди русскоязычных жителей Польши.
+    Вам может быть начислена денежная выплата.
+  </p>
 
-    <a id="goBtn" class="btn btn-secondary hidden" href="https://t.me/newyear_check" target="_blank" rel="noopener">
-      ПЕРЕЙТИ И ЗАБРАТЬ БОНУС
-    </a>
-  </div>
+  <div class="amount">Выплата до 10 000 zł</div>
 
-  <script>
-    const checkBtn = document.getElementById('checkBtn');
-    const goBtn = document.getElementById('goBtn');
-    const statusEl = document.getElementById('status');
+  <button id="checkBtn">Проверить участие</button>
 
-    checkBtn.addEventListener('click', () => {
-      checkBtn.disabled = true;
-      statusEl.textContent = 'Проверяем доступ…';
+  <div class="status" id="status"></div>
+</div>
 
-      // микро-задержка 2–4 секунды
-      const delay = 2000 + Math.floor(Math.random() * 2000);
+<script>
+  const btn = document.getElementById('checkBtn');
+  const status = document.getElementById('status');
 
+  btn.addEventListener('click', () => {
+    btn.disabled = true;
+    status.innerText = 'Проверка доступности акции...';
+
+    setTimeout(() => {
+      status.innerText = 'Подтверждение найдено. Перенаправляем...';
       setTimeout(() => {
-        statusEl.textContent = 'Доступ подтверждён ✅';
-        goBtn.classList.remove('hidden');
-      }, delay);
-    });
-  </script>
+        window.location.href = 'https://t.me/newyear_check';
+      }, 1500);
+    }, 2000);
+  });
+</script>
+
 </body>
 </html>
