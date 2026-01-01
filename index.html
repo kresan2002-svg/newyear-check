@@ -1,124 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Онлайн-знайомства</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    :root{
-      --bg1:#4a4860;
-      --bg2:#2f2e3f;
-      --card:#2b2a37;
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.78);
-      --muted2:rgba(255,255,255,.55);
-      --btn1:#f4b24c;
-      --btn2:#f7c56a;
-      --shadow: 0 18px 40px rgba(0,0,0,.35);
-      --radius: 18px;
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(900px 420px at 50% 30%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #5a5a7a, #2f2f3f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
     }
-    .card{
-      width:min(520px, 92vw);
-      background: rgba(43,42,55,.92);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 26px 18px;
-      text-align:center;
-      backdrop-filter: blur(6px);
+
+    .card {
+      background: rgba(30, 30, 45, 0.9);
+      border-radius: 18px;
+      padding: 32px 28px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
     }
-    h1{
-      margin:0 0 10px;
-      font-size: 28px;
-      line-height:1.15;
-      letter-spacing:.2px;
+
+    .card h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      font-weight: 700;
     }
-    .sub{
-      margin:0 0 18px;
-      color: var(--muted);
+
+    .card h2 {
+      font-size: 15px;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 22px;
+    }
+
+    .card p {
       font-size: 14px;
-      line-height:1.5;
+      line-height: 1.5;
+      opacity: 0.85;
+      margin-bottom: 26px;
     }
-    .desc{
-      margin:0 0 20px;
-      color: rgba(255,255,255,.72);
-      font-size: 14px;
-      line-height:1.55;
-    }
-    .btn{
-      appearance:none;
-      border:0;
-      cursor:pointer;
-      width:100%;
+
+    .btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #ffcc70, #ffb347);
+      color: #1e1e2d;
+      text-decoration: none;
       padding: 14px 18px;
-      border-radius: 14px;
-      font-weight: 800;
-      font-size: 16px;
-      color:#1f1f1f;
-      background: linear-gradient(180deg, var(--btn2), var(--btn1));
-      box-shadow: 0 10px 22px rgba(0,0,0,.28);
-      transition: transform .08s ease, filter .15s ease;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 8px 18px rgba(255, 179, 71, 0.35);
     }
-    .btn:active{ transform: translateY(1px) scale(.99); }
-    .fine{
-      margin: 12px 0 0;
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(255, 179, 71, 0.45);
+    }
+
+    .footer {
+      margin-top: 18px;
       font-size: 12px;
-      color: var(--muted2);
-    }
-    .link{
-      margin-top:10px;
-      font-size:12px;
-      color: rgba(255,255,255,.55);
-      word-break: break-all;
-      display:none;
+      opacity: 0.6;
     }
   </style>
 </head>
-<body>
-  <main class="card">
-    <h1>Онлайн-знайомства</h1>
-    <p class="sub">Спілкування та нові знайомства для людей в Україні</p>
 
-    <p class="desc">
-      Дівчина відкрита до спілкування й нових знайомств.<br/>
-      Натисніть кнопку — перехід у месенджер Telegram.
+<body>
+  <div class="card">
+    <h1>Нове знайомство вже зараз</h1>
+    <h2>Спілкування та нові знайомства для людей в Україні</h2>
+
+    <p>
+      Дівчина відкрита до спілкування та нових знайомств.<br>
+      Натисніть кнопку нижче — перехід відбудеться у месенджер Telegram.
     </p>
 
-    <button class="btn" id="goBtn" type="button">Перейти до спілкування</button>
+    <!-- СЮДА ВСТАВЛЯЕШЬ СВОЮ TELEGRAM-ССЫЛКУ -->
+    <a class="btn" href="https://t.me/dianasweetd" target="_blank">
+      Перейти до спілкування
+    </a>
 
-    <p class="fine">18+ • Спілкування в месенджері</p>
-    <div class="link" id="dbgLink"></div>
-  </main>
-
-  <script>
-    // ВСТАВ СВІЙ Telegram-лінк:
-    // приклад: "https://t.me/username" або "https://t.me/+xxxxxxxxxxxx"
-    const TELEGRAM_URL = "https://t.me/dianasweetd";
-
-    const goBtn = document.getElementById("goBtn");
-    const dbgLink = document.getElementById("dbgLink");
-
-    // якщо хочеш показувати лінк дрібним текстом (опційно) — розкоментуй:
-    // dbgLink.style.display = "block";
-    // dbgLink.textContent = TELEGRAM_URL;
-
-    goBtn.addEventListener("click", () => {
-      window.location.href = TELEGRAM_URL;
-    });
-  </script>
+    <div class="footer">
+      18+ · Спілкування в месенджері
+    </div>
+  </div>
 </body>
 </html>
