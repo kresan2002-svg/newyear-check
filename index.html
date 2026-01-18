@@ -1,101 +1,415 @@
-<!DOCTYPE html>
-<html lang="uk">
+<!doctype html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Онлайн-знайомства</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Написать</title>
+  <meta name="robots" content="noindex,nofollow" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+    :root{
+      --fg:#ecf7f1;
+      --muted:rgba(236,247,241,.75);
+      --card:rgba(10,24,18,.55);
+      --card2:rgba(10,24,18,.35);
+      --stroke:rgba(236,247,241,.14);
+      --btn:#19c37d;
+      --btn2:#0fb26e;
+      --danger:#ff5a6a;
+      --shadow: 0 24px 70px rgba(0,0,0,.45);
+      --radius: 22px;
     }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #5a5a7a, #2f2f3f);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--fg);
+      overflow-x:hidden;
+      /* Forest vibe background: sky -> fog -> forest */
+      background:
+        radial-gradient(1200px 700px at 50% -10%, rgba(141,255,208,.22), transparent 60%),
+        radial-gradient(900px 500px at 15% 5%, rgba(88,184,255,.18), transparent 55%),
+        radial-gradient(1000px 600px at 80% 10%, rgba(255,255,255,.12), transparent 55%),
+        linear-gradient(180deg, #04110b 0%, #04140d 30%, #03110a 60%, #020a06 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
     }
 
-    .card {
-      background: rgba(30, 30, 45, 0.9);
+    /* Decorative “forest layers” */
+    .forest {
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .mist{
+      position:absolute; inset:-20%;
+      background: radial-gradient(900px 500px at 50% 35%, rgba(240,255,250,.14), transparent 60%),
+                  radial-gradient(900px 500px at 25% 55%, rgba(240,255,250,.10), transparent 65%),
+                  radial-gradient(900px 500px at 75% 60%, rgba(240,255,250,.08), transparent 65%);
+      filter: blur(2px);
+      opacity:.9;
+      animation: drift 14s ease-in-out infinite alternate;
+      transform: translate3d(0,0,0);
+    }
+    @keyframes drift{
+      from{ transform: translate3d(-1.5%,0,0) scale(1.02); }
+      to{   transform: translate3d( 1.5%,0,0) scale(1.04); }
+    }
+
+    .trees{
+      position:absolute; left:0; right:0; bottom:-20px; height:58vh;
+      background:
+        /* far trees */
+        radial-gradient(120px 240px at 8% 80%, rgba(8,46,28,.80), transparent 60%),
+        radial-gradient(140px 260px at 18% 78%, rgba(6,40,24,.85), transparent 60%),
+        radial-gradient(160px 280px at 30% 82%, rgba(7,44,26,.85), transparent 60%),
+        radial-gradient(140px 260px at 44% 78%, rgba(6,38,23,.88), transparent 60%),
+        radial-gradient(170px 300px at 56% 82%, rgba(7,45,27,.86), transparent 60%),
+        radial-gradient(150px 280px at 70% 79%, rgba(6,40,24,.88), transparent 60%),
+        radial-gradient(120px 240px at 84% 81%, rgba(7,44,26,.84), transparent 60%),
+        radial-gradient(150px 280px at 94% 78%, rgba(6,38,23,.88), transparent 60%),
+        /* ground */
+        linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.85) 100%);
+      filter: blur(.2px);
+      opacity:.95;
+    }
+
+    .trees2{
+      position:absolute; left:-5%; right:-5%; bottom:-50px; height:50vh;
+      background:
+        radial-gradient(180px 340px at 12% 88%, rgba(10,64,36,.95), transparent 62%),
+        radial-gradient(210px 380px at 26% 90%, rgba(10,60,34,.92), transparent 62%),
+        radial-gradient(240px 420px at 44% 92%, rgba(8,54,31,.92), transparent 62%),
+        radial-gradient(220px 400px at 62% 90%, rgba(10,60,34,.92), transparent 62%),
+        radial-gradient(190px 360px at 78% 92%, rgba(8,54,31,.92), transparent 62%),
+        radial-gradient(180px 340px at 92% 88%, rgba(10,64,36,.95), transparent 62%),
+        linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.65) 55%, rgba(0,0,0,.92) 100%);
+      filter: blur(.1px);
+      opacity:.92;
+      transform: translate3d(0,0,0);
+    }
+
+    .wrap{
+      width:min(520px, 100%);
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      background: linear-gradient(180deg, var(--card) 0%, var(--card2) 100%);
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: 28px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.2px;
+      user-select:none;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: rgba(25,195,125,.95);
+      box-shadow: 0 0 0 6px rgba(25,195,125,.16);
+    }
+
+    h1{
+      margin: 14px 0 10px;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: .2px;
+    }
+
+    p{
+      margin:0 0 18px;
+      color: var(--muted);
+      line-height:1.5;
+      font-size: 15.5px;
+    }
+
+    .btn{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,.2);
+      background: linear-gradient(180deg, var(--btn) 0%, var(--btn2) 100%);
+      color:#062015;
+      font-weight: 800;
+      font-size: 16px;
+      cursor:pointer;
+      transition: transform .08s ease, filter .2s ease;
+      box-shadow: 0 14px 30px rgba(25,195,125,.18);
+    }
+    .btn:hover{ filter: brightness(1.02); }
+    .btn:active{ transform: scale(.99); }
+    .btn:focus{ outline: 2px solid rgba(25,195,125,.55); outline-offset: 3px; }
+
+    .sub{
+      margin-top: 14px;
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      color: rgba(236,247,241,.6);
+      font-size: 12.5px;
+      user-select:none;
+    }
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
+      z-index:50;
+    }
+    .modal{
+      width:min(520px, 100%);
+      background: rgba(7,18,13,.92);
+      border:1px solid rgba(236,247,241,.16);
       border-radius: 18px;
-      padding: 32px 28px;
-      max-width: 420px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      backdrop-filter: blur(10px);
     }
-
-    .card h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
-      font-weight: 700;
+    .modal h2{
+      margin: 6px 0 6px;
+      font-size: 18px;
+      letter-spacing:.2px;
     }
-
-    .card h2 {
-      font-size: 15px;
-      font-weight: 400;
-      opacity: 0.9;
-      margin-bottom: 22px;
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(236,247,241,.10);
+      margin: 10px 0;
     }
-
-    .card p {
-      font-size: 14px;
-      line-height: 1.5;
-      opacity: 0.85;
-      margin-bottom: 26px;
+    label{ font-size: 14px; color: rgba(236,247,241,.86); }
+    input[type="checkbox"]{ width:18px;height:18px; }
+    .math{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      width:100%;
     }
-
-    .btn {
-      display: block;
-      width: 100%;
-      background: linear-gradient(135deg, #ffcc70, #ffb347);
-      color: #1e1e2d;
-      text-decoration: none;
-      padding: 14px 18px;
+    .math strong{ font-size: 14px; color: rgba(236,247,241,.88); }
+    .math input{
+      width: 120px;
+      padding: 10px 10px;
       border-radius: 12px;
-      font-weight: 600;
-      font-size: 15px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      box-shadow: 0 8px 18px rgba(255, 179, 71, 0.35);
+      border: 1px solid rgba(236,247,241,.16);
+      background: rgba(0,0,0,.22);
+      color: var(--fg);
+      font-size: 14px;
+      outline:none;
+    }
+    .math input:focus{ border-color: rgba(25,195,125,.45); }
+
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      margin-top: 12px;
+    }
+    .btn-ghost{
+      flex:1;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(236,247,241,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(236,247,241,.85);
+      cursor:pointer;
+    }
+    .btn-ghost:hover{ background: rgba(255,255,255,.08); }
+    .btn-go{
+      flex:1.2;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(0,0,0,.2);
+      background: linear-gradient(180deg, var(--btn) 0%, var(--btn2) 100%);
+      color:#062015;
+      font-weight:800;
+      cursor:pointer;
+      opacity:.55;
+      pointer-events:none;
+    }
+    .btn-go.enabled{
+      opacity:1;
+      pointer-events:auto;
+    }
+    .error{
+      margin-top: 8px;
+      color: rgba(255,90,106,.95);
+      font-size: 13px;
+      display:none;
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 22px rgba(255, 179, 71, 0.45);
-    }
-
-    .footer {
-      margin-top: 18px;
+    .tiny{
+      margin-top: 10px;
+      color: rgba(236,247,241,.55);
       font-size: 12px;
-      opacity: 0.6;
+      line-height:1.35;
     }
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <h1>Нове знайомство вже зараз</h1>
-    <h2>Спілкування та нові знайомства для людей в Україні</h2>
+  <div class="forest" aria-hidden="true">
+    <div class="mist"></div>
+    <div class="trees"></div>
+    <div class="trees2"></div>
+  </div>
 
-    <p>
-      Дівчина відкрита до спілкування та нових знайомств.<br>
-      Натисніть кнопку нижче — перехід відбудеться у месенджер Telegram.
-    </p>
+  <main class="wrap">
+    <section class="card">
+      <div class="badge"><span class="dot"></span><span>Онлайн</span></div>
+      <h1>Нажмите, чтобы написать</h1>
+      <p>Нажмите кнопку ниже — откроется Telegram.</p>
 
-    <!-- СЮДА ВСТАВЛЯЕШЬ СВОЮ TELEGRAM-ССЫЛКУ -->
-    <a class="btn" href="https://t.me/dianasweetd" target="_blank">
-      Перейти до спілкування
-    </a>
+      <button class="btn" id="openModal" type="button">
+        ✉️ Написать
+      </button>
 
-    <div class="footer">
-      18+ · Спілкування в месенджері
+      <div class="sub">
+        <span>Без регистрации</span>
+        <span>•</span>
+        <span>Быстро</span>
+        <span>•</span>
+        <span>Telegram</span>
+      </div>
+
+      <div class="tiny">
+        Совет: если Telegram не открывается в приложении, откроется в браузере.
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <h2 id="modalTitle">Проверка перед переходом</h2>
+
+      <div class="row">
+        <input type="checkbox" id="humanCheck" />
+        <label for="humanCheck">Я не робот</label>
+      </div>
+
+      <div class="row">
+        <div class="math">
+          <strong id="mathLabel">Решите: 7 + 5 = ?</strong>
+          <input id="mathInput" inputmode="numeric" autocomplete="off" placeholder="Ответ" />
+        </div>
+      </div>
+
+      <div class="error" id="err">Проверьте галочку и ответ.</div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="cancelBtn" type="button">Отмена</button>
+        <button class="btn-go" id="goBtn" type="button">Перейти в Telegram</button>
+      </div>
+
+      <div class="tiny">
+        Это простая защита от автокликов. Сильных ботов не остановит, но мусор режет.
+      </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      const TG_USERNAME = "voronko12";
+      const TG_LINK = "https://t.me/" + TG_USERNAME;
+
+      const openModalBtn = document.getElementById("openModal");
+      const backdrop = document.getElementById("backdrop");
+      const cancelBtn = document.getElementById("cancelBtn");
+      const goBtn = document.getElementById("goBtn");
+      const humanCheck = document.getElementById("humanCheck");
+      const mathLabel = document.getElementById("mathLabel");
+      const mathInput = document.getElementById("mathInput");
+      const err = document.getElementById("err");
+
+      // Generate simple math challenge (double-check)
+      function newChallenge() {
+        const a = Math.floor(6 + Math.random() * 7);   // 6..12
+        const b = Math.floor(4 + Math.random() * 8);   // 4..11
+        backdrop.dataset.answer = String(a + b);
+        mathLabel.textContent = `Решите: ${a} + ${b} = ?`;
+        mathInput.value = "";
+        humanCheck.checked = false;
+        err.style.display = "none";
+        goBtn.classList.remove("enabled");
+      }
+
+      function validate() {
+        const ok1 = humanCheck.checked;
+        const ans = (mathInput.value || "").trim();
+        const ok2 = ans !== "" && ans === (backdrop.dataset.answer || "");
+        if (ok1 && ok2) {
+          goBtn.classList.add("enabled");
+          err.style.display = "none";
+        } else {
+          goBtn.classList.remove("enabled");
+        }
+      }
+
+      function openModal() {
+        newChallenge();
+        backdrop.style.display = "flex";
+        setTimeout(() => mathInput.focus(), 50);
+      }
+
+      function closeModal() {
+        backdrop.style.display = "none";
+      }
+
+      // Events
+      openModalBtn.addEventListener("click", openModal);
+      cancelBtn.addEventListener("click", closeModal);
+
+      backdrop.addEventListener("click", (e) => {
+        if (e.target === backdrop) closeModal();
+      });
+
+      humanCheck.addEventListener("change", validate);
+      mathInput.addEventListener("input", validate);
+
+      goBtn.addEventListener("click", () => {
+        const ok1 = humanCheck.checked;
+        const ans = (mathInput.value || "").trim();
+        const ok2 = ans !== "" && ans === (backdrop.dataset.answer || "");
+        if (!(ok1 && ok2)) {
+          err.style.display = "block";
+          return;
+        }
+        // Redirect to Telegram
+        window.location.href = TG_LINK;
+      });
+
+      // ESC close
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && backdrop.style.display === "flex") closeModal();
+      });
+    })();
+  </script>
 </body>
 </html>
